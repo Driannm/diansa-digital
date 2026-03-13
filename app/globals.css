@@ -4,10 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────
+   Diansa Digital – Brand Token Override
+   Memetakan warna brand ke sistem shadcn
+───────────────────────────────────────── */
 @theme inline {
+  /* shadcn system tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -38,6 +43,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* Border radius scale */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -45,85 +52,207 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Diansa brand tokens sebagai Tailwind utilities */
+  --color-cream: #e7e3de;
+  --color-lime: #d4f04a;
+  --color-lime-light: #e8f9a0;
+  --color-ink: #1a1a18;
+  --color-muted-brand: #6b6860;
 }
 
+/* ─────────────────────────────────────────
+   Light mode  (default — Diansa cream theme)
+───────────────────────────────────────── */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* shadcn tokens disesuaikan ke palet Diansa */
+  --background: #e7e3de;              /* cream */
+  --foreground: #1a1a18;              /* ink */
+  --card: #f0ede8;
+  --card-foreground: #1a1a18;
+  --popover: #f0ede8;
+  --popover-foreground: #1a1a18;
+  --primary: #1a1a18;                 /* ink sebagai primary */
+  --primary-foreground: #e7e3de;
+  --secondary: #d4f04a;               /* lime sebagai secondary */
+  --secondary-foreground: #1a1a18;
+  --muted: rgba(26, 26, 24, 0.06);
+  --muted-foreground: #6b6860;
+  --accent: #d4f04a;                  /* lime sebagai accent */
+  --accent-foreground: #1a1a18;
   --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: rgba(26, 26, 24, 0.12);
+  --input: rgba(26, 26, 24, 0.1);
+  --ring: #d4f04a;
+  --radius: 0.75rem;
+
+  /* Chart */
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Sidebar */
+  --sidebar: #f0ede8;
+  --sidebar-foreground: #1a1a18;
+  --sidebar-primary: #1a1a18;
+  --sidebar-primary-foreground: #e7e3de;
+  --sidebar-accent: rgba(212, 240, 74, 0.3);
+  --sidebar-accent-foreground: #1a1a18;
+  --sidebar-border: rgba(26, 26, 24, 0.12);
+  --sidebar-ring: #d4f04a;
+
+  /* Diansa raw brand vars (untuk dipakai langsung di komponen) */
+  --cream: #e7e3de;
+  --lime: #d4f04a;
+  --lime-light: #e8f9a0;
+  --ink: #1a1a18;
+  --brand-muted: #6b6860;
 }
 
+/* ─────────────────────────────────────────
+   Dark mode  (opsional, ink + lime)
+───────────────────────────────────────── */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.87 0.00 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #1a1a18;
+  --foreground: #e7e3de;
+  --card: #242420;
+  --card-foreground: #e7e3de;
+  --popover: #242420;
+  --popover-foreground: #e7e3de;
+  --primary: #d4f04a;                 /* lime jadi primary di dark */
+  --primary-foreground: #1a1a18;
+  --secondary: #2e2e2a;
+  --secondary-foreground: #e7e3de;
+  --muted: #2e2e2a;
+  --muted-foreground: #9e9a94;
+  --accent: #3a3a34;
+  --accent-foreground: #e7e3de;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: rgba(231, 227, 222, 0.1);
+  --input: rgba(231, 227, 222, 0.12);
+  --ring: rgba(212, 240, 74, 0.5);
+
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+
+  --sidebar: #242420;
+  --sidebar-foreground: #e7e3de;
+  --sidebar-primary: #d4f04a;
+  --sidebar-primary-foreground: #1a1a18;
+  --sidebar-accent: #2e2e2a;
+  --sidebar-accent-foreground: #e7e3de;
+  --sidebar-border: rgba(231, 227, 222, 0.1);
+  --sidebar-ring: rgba(212, 240, 74, 0.4);
 }
 
+/* ─────────────────────────────────────────
+   Base layer
+───────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    @apply font-sans;
+}
+
+/* ─────────────────────────────────────────
+   Grain texture overlay
+───────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.35;
+}
+
+/* ─────────────────────────────────────────
+   Keyframe animations
+───────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─────────────────────────────────────────
+   Animation utility classes
+───────────────────────────────────────── */
+.animate-fadeInUp  { animation: fadeInUp  0.7s ease forwards; }
+.animate-fadeIn    { animation: fadeIn    0.6s ease forwards; }
+.animate-scaleIn   { animation: scaleIn   0.5s ease forwards; }
+.animate-marquee   { animation: marquee  25s linear infinite;  }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* Hidden until animation triggers */
+.stagger-child { opacity: 0; }
+
+/* ─────────────────────────────────────────
+   Component-level styles
+───────────────────────────────────────── */
+
+/* Theme card hover */
+.theme-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+.theme-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Scroll reveal (driven by ScrollReveal.tsx client component) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
