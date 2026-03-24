@@ -13,15 +13,15 @@ interface FAQCategoryProps {
 export default function FAQCategory({ title, items }: FAQCategoryProps) {
   return (
     <div className="mb-14">
-      {/* Category title — konsisten dengan eyebrow style Diansa */}
+      {/* Category title */}
       <div className="flex items-center gap-3 mb-2">
-        <h2 className="font-display text-sm font-semibold text-[#6b6860] uppercase tracking-[0.15em]">
+        <h2 className="font-display text-sm font-semibold text-[#6b6860] dark:text-gray-400 uppercase tracking-[0.15em]">
           {title}
         </h2>
       </div>
 
       {/* FAQ list */}
-      <div className="border-t border-[#1a1a18]/8">
+      <div className="border-t border-[#1a1a18]/8 dark:border-white/10">
         {items.map((item, i) => (
           <FAQItem
             key={i}
