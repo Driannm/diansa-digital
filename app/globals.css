@@ -256,3 +256,28 @@ body::before {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f3; /* warna track (background) */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d4f04a; /* warna scroll */
+  border-radius: 9999px;
+  border: 2px solid #f5f5f3; /* biar ada padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c8e840;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d4f04a #f5f5f3;
+}
