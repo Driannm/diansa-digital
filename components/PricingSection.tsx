@@ -1,64 +1,49 @@
 "use client";
 
 import { useGSAP } from "@/hooks/useGSAP";
+import { PricingPlan } from "@/Types/Pricing";
 
-const plans = [
-  {
-    name: "Basic",
-    price: "149.000",
-    description: "Cocok untuk acara sederhana namun tetap berkesan.",
-    features: [
-      "1 tema pilihan",
-      "Nama & tanggal acara",
-      "Link undangan aktif 3 bulan",
-      "RSVP online",
-      "Tanpa background music",
-    ],
-    cta: "Pilih Basic",
-    highlighted: false,
-  },
-  {
-    name: "Premium",
-    price: "299.000",
-    description: "Lengkap untuk momen paling berharga dalam hidupmu.",
-    features: [
-      "Semua fitur Basic",
-      "Background music pilihan",
-      "Galeri foto (hingga 20 foto)",
-      "Countdown timer",
-      "Google Maps terintegrasi",
-      "Link aktif selamanya",
-      "Revisi 2x gratis",
-    ],
-    cta: "Pilih Premium",
-    highlighted: true,
-    badge: "Terpopuler",
-  },
-  {
-    name: "Exclusive",
-    price: "499.000",
-    description: "Pengalaman undangan digital setara wedding organizer.",
-    features: [
-      "Semua fitur Premium",
-      "Desain custom penuh",
-      "Video opening undangan",
-      "Unlimited revisi",
-      "Priority support 24/7",
-      "QR code undangan",
-      "Cetak amplop digital",
-    ],
-    cta: "Pilih Exclusive",
-    highlighted: false,
-  },
-];
+// Komponen ikon checkmark
+const CheckIcon = ({ highlighted }: { highlighted: boolean }) => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    className="flex-shrink-0 mt-0.5"
+  >
+    <circle
+      cx="9"
+      cy="9"
+      r="8"
+      stroke={highlighted ? "#d4f04a" : "#1a1a18"}
+      strokeOpacity={highlighted ? "1" : "0.15"}
+      strokeWidth="1.2"
+      className={highlighted ? "" : "dark:stroke-white dark:stroke-opacity-20"}
+    />
+    <path
+      d="M6 9.5L8.5 12L12.5 7"
+      stroke={highlighted ? "#d4f04a" : "#1a1a18"}
+      strokeOpacity={highlighted ? "1" : "0.8"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={highlighted ? "" : "dark:stroke-white dark:stroke-opacity-80"}
+    />
+  </svg>
+);
 
-export default function PricingSection() {
+interface PricingSectionProps {
+  plans: PricingPlan[];
+}
+
+export default function PricingSection({ plans }: PricingSectionProps) {
   const containerRef = useGSAP((gsap, ScrollTrigger) => {
-    // Header animation
+    // Animasi header
     gsap.from(".pricing-header", {
       opacity: 0,
-      y: 40,
-      duration: 0.7,
+      y: 30,
+      duration: 0.8,
       ease: "power3.out",
       scrollTrigger: {
         trigger: ".pricing-header",
@@ -67,22 +52,20 @@ export default function PricingSection() {
       },
     });
 
-    // Card animations
-    gsap.utils.toArray<HTMLElement>(".pricing-card").forEach((card) => {
-      gsap.from(card, {
-        opacity: 0,
-        y: 60,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      });
+    // Animasi kartu dengan efek stagger
+    gsap.from(".pricing-card", {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".pricing-grid",
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
     });
 
-    // Refresh ScrollTrigger to recalculate positions
     ScrollTrigger.refresh();
   });
 
@@ -91,134 +74,130 @@ export default function PricingSection() {
       ref={containerRef as React.RefObject<HTMLElement>}
       className="py-28 bg-[#e7e3de] dark:bg-[#1a1a18] transition-colors duration-500"
     >
-      <div className="max-w-6xl mx-auto px-6">
-        {/* ── Header ── */}
-        <div className="pricing-header text-center mb-20">
-          <p className="text-xs tracking-[0.2em] uppercase font-medium text-[#9a9690] dark:text-gray-400 mb-4">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+        {/* Header */}
+        <div className="pricing-header text-center mb-16 md:mb-20">
+          <span className="inline-block text-xs tracking-[0.25em] uppercase font-medium text-[#9a9690] dark:text-gray-400 mb-5">
             Harga
-          </p>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#1a1a18] dark:text-white leading-tight tracking-tight">
+          </span>
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#1a1a18] dark:text-white leading-tight tracking-tight">
             Paket yang{" "}
             <span className="italic font-normal text-[#1a1a18]/35 dark:text-white/35">
               Sesuai Kebutuhan
             </span>
           </h2>
-          <p className="mt-5 text-[#6b6860] dark:text-gray-400 text-base leading-relaxed max-w-sm mx-auto">
+          <p className="mt-5 text-[#6b6860] dark:text-gray-400 text-base leading-relaxed max-w-md mx-auto">
             Harga transparan, tanpa biaya tersembunyi.
             <br />
             Semua paket sudah termasuk revisi.
           </p>
         </div>
 
-        {/* ── Cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+        {/* Grid Kartu */}
+        <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch md:items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
               className={`
-                pricing-card relative rounded-3xl p-8 flex flex-col
-                transition-all duration-300 hover:-translate-y-1
+                pricing-card group relative rounded-3xl p-7 md:p-8 flex flex-col
+                transition-all duration-500 hover:shadow-2xl
                 ${
                   plan.highlighted
-                    ? "bg-[#1a1a18] dark:bg-[#1a1a18] text-white shadow-2xl shadow-black/20 dark:shadow-black/30 md:-mt-4 md:pb-12"
-                    : "bg-white/70 dark:bg-[#1a1a18]/70 backdrop-blur-sm border border-black/10 dark:border-white/10"
+                    ? "bg-[#1a1a18] dark:bg-[#1a1a18] text-white shadow-xl shadow-black/20 dark:shadow-black/30 md:scale-105 md:-mt-2 md:mb-2"
+                    : "bg-white/80 dark:bg-[#1a1a18]/80 backdrop-blur-sm border border-[#1a1a18]/10 dark:border-white/10 hover:bg-white dark:hover:bg-[#1a1a18]/90"
                 }
               `}
             >
               {/* Badge */}
               {plan.badge && (
-                <span className="absolute -top-3 left-8 bg-[#d4f04a] dark:bg-[#d4f04a] text-[#1a1a18] dark:text-[#1a1a18] text-[10px] tracking-[0.15em] uppercase font-semibold px-3.5 py-1.5 rounded-full">
+                <div className="absolute -top-3.5 left-6 bg-[#d4f04a] text-[#1a1a18] text-[10px] tracking-[0.2em] uppercase font-bold px-4 py-1.5 rounded-full shadow-md">
                   {plan.badge}
-                </span>
+                </div>
               )}
 
-              {/* Plan name */}
-              <p
-                className={`text-[11px] tracking-[0.18em] uppercase font-semibold mb-3 ${
-                  plan.highlighted
-                    ? "text-[#d4f04a] dark:text-[#d4f04a]"
-                    : "text-[#9a9690] dark:text-gray-400"
-                }`}
-              >
-                {plan.name}
-              </p>
-
-              {/* Price */}
-              <div className="mb-3 flex items-baseline gap-1.5">
-                <span
-                  className={`text-[11px] font-medium ${
+              {/* Nama Paket */}
+              <div className="flex items-center gap-2 mb-3">
+                <p
+                  className={`text-[11px] tracking-[0.2em] uppercase font-semibold ${
                     plan.highlighted
-                      ? "text-white/40 dark:text-white/40"
+                      ? "text-[#d4f04a]"
+                      : "text-[#9a9690] dark:text-gray-400"
+                  }`}
+                >
+                  {plan.name}
+                </p>
+                {plan.discountBadge && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 border border-red-500/20">
+                    {plan.discountBadge}
+                  </span>
+                )}
+              </div>
+
+              {/* Harga */}
+              <div className="mb-3 flex items-baseline gap-2">
+                <span
+                  className={`text-xs font-medium ${
+                    plan.highlighted
+                      ? "text-white/40"
                       : "text-[#9a9690] dark:text-gray-400"
                   }`}
                 >
                   Rp
                 </span>
                 <span
-                  className={`font-display text-[2.6rem] font-bold leading-none tracking-tight ${
+                  className={`font-display text-4xl md:text-5xl font-bold leading-none tracking-tight ${
                     plan.highlighted
-                      ? "text-white dark:text-white"
+                      ? "text-white"
                       : "text-[#1a1a18] dark:text-white"
                   }`}
                 >
                   {plan.price}
                 </span>
+                {/* Harga coret jika ada originalPrice */}
+                {plan.originalPrice && (
+                  <>
+                    <span
+                      className={`text-sm line-through ml-1 ${
+                        plan.highlighted
+                          ? "text-white/30"
+                          : "text-[#9a9690]/60 dark:text-gray-500"
+                      }`}
+                    >
+                      Rp {plan.originalPrice}
+                    </span>
+                  </>
+                )}
               </div>
 
-              {/* Description */}
+              {/* Deskripsi */}
               <p
                 className={`text-sm leading-relaxed mb-7 ${
                   plan.highlighted
-                    ? "text-white/50 dark:text-white/50"
-                    : "text-[#9a9690] dark:text-gray-400"
+                    ? "text-white/50"
+                    : "text-[#6b6860] dark:text-gray-400"
                 }`}
               >
                 {plan.description}
               </p>
 
-              {/* Divider */}
+              {/* Garis Pembatas */}
               <div
                 className={`w-full h-px mb-7 ${
                   plan.highlighted
-                    ? "bg-white/10 dark:bg-white/10"
-                    : "bg-black/10 dark:bg-white/10"
+                    ? "bg-white/10"
+                    : "bg-[#1a1a18]/10 dark:bg-white/10"
                 }`}
               />
 
-              {/* Features */}
-              <ul className="space-y-3.5 flex-1 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-sm">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      className="flex-shrink-0"
-                    >
-                      <circle
-                        cx="8"
-                        cy="8"
-                        r="7.25"
-                        stroke={plan.highlighted ? "#d4f04a" : "#1a1a18"}
-                        strokeWidth="0.75"
-                        strokeOpacity={plan.highlighted ? "1" : "0.2"}
-                        className={plan.highlighted ? "" : "dark:stroke-white dark:stroke-opacity-20"}
-                      />
-                      <path
-                        d="M5 8.2L7 10.2L11 6"
-                        stroke={plan.highlighted ? "#d4f04a" : "#1a1a18"}
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeOpacity={plan.highlighted ? "1" : "0.6"}
-                        className={plan.highlighted ? "" : "dark:stroke-white dark:stroke-opacity-60"}
-                      />
-                    </svg>
+              {/* Daftar Fitur */}
+              <ul className="space-y-4 flex-1 mb-8">
+                {plan.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-sm">
+                    <CheckIcon highlighted={plan.highlighted} />
                     <span
                       className={
                         plan.highlighted
-                          ? "text-white/75 dark:text-white/75"
+                          ? "text-white/80"
                           : "text-[#4a4a48] dark:text-gray-300"
                       }
                     >
@@ -228,15 +207,17 @@ export default function PricingSection() {
                 ))}
               </ul>
 
-              {/* CTA */}
+              {/* Tombol CTA */}
               <button
                 className={`
-                  w-full py-3.5 rounded-2xl text-sm font-semibold tracking-wide
-                  transition-all duration-200 active:scale-[0.98]
+                  w-full py-4 rounded-2xl text-sm font-semibold tracking-wide
+                  transition-all duration-300 active:scale-[0.97]
+                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                  focus-visible:outline-[#d4f04a]
                   ${
                     plan.highlighted
-                      ? "bg-[#d4f04a] text-[#1a1a18] hover:bg-[#caea3f] dark:bg-[#d4f04a] dark:text-[#1a1a18] dark:hover:bg-[#caea3f]"
-                      : "bg-[#1a1a18] text-white hover:bg-[#111110] dark:bg-[#d4f04a] dark:text-[#1a1a18] dark:hover:bg-[#caea3f]"
+                      ? "bg-[#d4f04a] text-[#1a1a18] hover:bg-[#c8e840] hover:shadow-lg hover:shadow-[#d4f04a]/20"
+                      : "bg-[#1a1a18] text-white hover:bg-[#2a2a28] dark:bg-[#d4f04a] dark:text-[#1a1a18] dark:hover:bg-[#c8e840]"
                   }
                 `}
               >
@@ -246,12 +227,12 @@ export default function PricingSection() {
           ))}
         </div>
 
-        {/* ── Footer note ── */}
-        <p className="text-center text-xs text-[#9a9690] dark:text-gray-400 mt-10">
+        {/* Catatan Kaki */}
+        <p className="text-center text-xs text-[#9a9690] dark:text-gray-400 mt-12">
           Butuh paket khusus?{" "}
           <a
             href="https://wa.me/628xxx"
-            className="text-[#1a1a18] dark:text-white font-medium underline underline-offset-2 decoration-[#1a1a18]/30 dark:decoration-white/30 hover:decoration-[#1a1a18] dark:hover:decoration-white transition-all"
+            className="text-[#1a1a18] dark:text-white font-medium underline underline-offset-4 decoration-[#1a1a18]/30 dark:decoration-white/30 hover:decoration-[#1a1a18] dark:hover:decoration-white transition-all"
           >
             Hubungi kami via WhatsApp
           </a>
